@@ -11,25 +11,28 @@ function calculateTotal(event) {
   // Prevent the form from submitting
   event.preventDefault();
 
-  // Display the total amount as a decimal
-  totalDisplay.innerText = "Total: $" + total.toFixed(2); // Format number to a fixed number of (2) decimal places
-
   // Get the bill amount and tip percentage from the inputs
-  let bill = billInput.value;
-  let tip = tipSelect.value; 
+  // Input values from the DOM are strings, so we convert them to numbers
+  let bill = parseFloat(billInput.value);
+  let tip = parseFloat(tipSelect.value);
 
   // Calculate the total amount
+  // This adds the original bill to the tip amount (bill * tip / 100)
   let total = bill + (bill * tip / 100);
+
+  // Display the total amount as a decimal with 2 decimal places
+  totalDisplay.innerText = `Total: $${total.toFixed(2)}`; // Format number to 2 decimal places
 }
 
 // Function to toggle light/dark mode
 function toggleTheme() {
-  if (document.body.className === "dark") {
-    document.body.className = "light";
-    themeToggle.innerText = "Switch to Dark Mode";
+  // Toggle returns true when the class was added, false when removed
+  let isDarkMode = document.body.classList.toggle("dark");
+
+  if (isDarkMode) {
+    themeToggle.innerHTML = '<i class="fas fa-sun"></i> Switch to Light Mode';
   } else {
-    document.body.classList.add("dark");
-    themeToggle.innerText = "Switch to Light Mode";
+    themeToggle.innerHTML = '<i class="fas fa-moon"></i> Switch to Dark Mode';
   }
 }
 
